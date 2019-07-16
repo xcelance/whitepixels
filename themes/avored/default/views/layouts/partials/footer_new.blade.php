@@ -43,11 +43,9 @@
                         <div class="f-inner contact-us">
                             <h4>CONTACT US</h4>
                             <ul class="">
-                                <li><a href="#">028 9032 3552</a></li>
+                                <li><a href="#">+44 28 9094 4444</a></li>
                                 <li><a href="#">quotes@whitepixels.net</a></li>
-                                <li>Unit 16, Compass West Industrial Estate, Speke, Liverpool, L24 1YA </li>
-                                <li>3 Nicholson Drive, Michelin Road, Mallusk, BT36 4FB </li>
-                                
+                                <li>White Pixels, Owen O’Cork Mill, Unit 9B, 288 Beersbridge Rd, Belfast, BT5 5DX, County Antrim, Northern Ireland</li>
                             </ul>
                         </div>
                     </div> 

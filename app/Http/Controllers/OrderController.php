@@ -93,6 +93,8 @@ class OrderController extends Controller
                     $euro_org_price = $EUR_price;
                     $prepare_days = $get_order->prepare_days;
                     $tat_price_pound = json_decode($get_order->tat_price_pound);
+                    $tat_price = json_decode($get_order->tat_price_pound);
+                    $tat_days = json_decode($get_order->tat_days);
                      $tat_price_euro = array();
                       foreach ($tat_price_pound as $key => $value) {
                         $tat_price_euro[] = $this->get_euro_price($value);
@@ -103,7 +105,13 @@ class OrderController extends Controller
                     $price["quantity"]  = $get_order->custom_quantity;
                     $sort = $cartProduct->orderdata->select_sort;
                     if($currency == "GBP"){
-                      $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                      if(!empty($tat_days)){
+                           $count = 0;
+                           for($i = 0; $i < count($tat_days); $i++){
+                                 $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                           }
+                       }
+                      /*$price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                       if(!empty($tat_price_pound)){
                           $count = 0;
                           for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
@@ -116,10 +124,17 @@ class OrderController extends Controller
 
                           }
 
-                      }
+                      }*/
                     }else{
 
-                      $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                      if(!empty($tat_days)){
+                          $count = 0;
+                          for($i = 0; $i < count($tat_days); $i++){
+                                $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                          }
+                      }
+
+                      /*$price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                       if(!empty($tat_price_euro)){
                           $count = 0;
                           for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -132,15 +147,15 @@ class OrderController extends Controller
 
                           }
 
-                      }
+                      }*/
                     } 
                 $org_price = "";  
                 $price_symbol = "";   
                 $product_price = ""; 
                 foreach ($price["price"] as $key => $value) {
                            if($value["day"] == $selected_day){
-                              $org_price .= ($value["price"] * $value["sort"]) + $value["tat_price"];
-                              $product_price .= ($value["price"] * $value["sort"]) + $value["tat_price"];
+                              $org_price .= $value["sort"] * $value["tat_price"];
+                              $product_price .= $value["sort"] * $value["tat_price"];;
                               $price_symbol .= $value["symbol"];
 
                                  if($cartProduct->orderdata->printing_sample) {
@@ -289,6 +304,8 @@ class OrderController extends Controller
                     $euro_org_price = $EUR_price;
                     $prepare_days = $get_order->prepare_days;
                     $tat_price_pound = json_decode($get_order->tat_price_pound);
+                    $tat_price = json_decode($get_order->tat_price_pound);
+                    $tat_days = json_decode($get_order->tat_days);
                     $tat_price_euro = array();
                     foreach ($tat_price_pound as $key => $value) {
                       $tat_price_euro[] = $this->get_euro_price($value);
@@ -299,7 +316,7 @@ class OrderController extends Controller
                     $price["quantity"]  = $get_order->custom_quantity;
                     $sort = $cartProduct->orderdata->select_sort;
                     if($currency == "GBP"){
-                      $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                      /*$price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                       if(!empty($tat_price_pound)){
                           $count = 0;
                           for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
@@ -312,10 +329,23 @@ class OrderController extends Controller
 
                           }
 
-                      }
+                      }*/
+                      if(!empty($tat_days)){
+                           $count = 0;
+                           for($i = 0; $i < count($tat_days); $i++){
+                                 $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                           }
+                       }
                     }else{
 
-                      $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                      if(!empty($tat_days)){
+                          $count = 0;
+                          for($i = 0; $i < count($tat_days); $i++){
+                                $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                          }
+                      }
+
+                      /*$price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                       if(!empty($tat_price_euro)){
                           $count = 0;
                           for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -328,13 +358,13 @@ class OrderController extends Controller
 
                           }
 
-                      }
+                      }*/
                     } 
                 $org_price = "";  
                 $price_symbol = "";   
                 foreach ($price["price"] as $key => $value) {
                            if($value["day"] == $selected_day){
-                              $org_price .= ($value["price"] * $value["sort"]) + $value["tat_price"];
+                              $org_price .= $value["sort"] * $value["tat_price"];
                               $price_symbol .= $value["symbol"];
                            }
                 }
@@ -413,12 +443,13 @@ class OrderController extends Controller
                   }                               
             }
             $data_mail = array("mail_order_data"=>$mail_order_data);
+            $orderprocess =  DB::table('orders')->insertGetId(["user_id"=>Auth::user()->id,"orderprocess_data"=>$orders_data,"payment_option"=>$payment_option,"order_status_id"=>"3", 'created_at'=>$date, 'updated_at'=>$date]);
             ///////////////////////////////////////////////
             Mail::send("mail.order_mail", $data_mail, function($message) use($email,$company_name){
              $message->to($email, "<".$company_name.">")->subject
                 ('Order successfully.');
             });
-             $orderprocess =  DB::table('orders')->insertGetId(["user_id"=>Auth::user()->id,"orderprocess_data"=>$orders_data,"payment_option"=>$payment_option,"order_status_id"=>"3", 'created_at'=>$date, 'updated_at'=>$date]);
+           
             
             foreach ($get_cart as $cartProduct) {
                 $cart_delete = DB::table('cart')
@@ -563,6 +594,7 @@ public function quote_place(Request $request)
         $get_orderprocess= DB::table('orderprocess')
                                ->where("order_id",$request->id)
                                ->first();
+        //echo "<pre>"; print_r($get_orderprocess); die;                     
         $get_orderprocess->order_data = json_decode($get_orderprocess->order_data);
         $get_order = DB::table('product_custom_fields')
                                ->where("id",$get_orderprocess->order_data->custom_field_id)
@@ -570,11 +602,12 @@ public function quote_place(Request $request)
         $orientation_data= DB::table('custom_attribute_cat')
                                ->where("parent_id",4)
                                ->get();
-
+        //echo "<pre>"; print_r($orientation_data); die;
               $selected_day = $get_orderprocess->order_data->order_day;
 
 
-              $pound_org_price = $get_order->custom_price_pound;   
+              $pound_org_price = $get_order->custom_price_pound;  
+
 
               $base_price = $pound_org_price;
               $EUR_price = $this->get_euro_price($base_price);
@@ -582,6 +615,8 @@ public function quote_place(Request $request)
               $euro_org_price = $EUR_price;
               $prepare_days = $get_order->prepare_days;
               $tat_price_pound = json_decode($get_order->tat_price_pound);
+              $tat_price = json_decode($get_order->tat_price_pound);
+              $tat_days = json_decode($get_order->tat_days);  
               $tat_price_euro = array();
               foreach ($tat_price_pound as $key => $value) {
                 $tat_price_euro[] = $this->get_euro_price($value);
@@ -593,8 +628,16 @@ public function quote_place(Request $request)
               $price["quantity"]  = $get_order->custom_quantity;
               $sort = $get_orderprocess->order_data->select_sort;
               if($currency == "GBP"){
-                $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
-                if(!empty($tat_price_pound)){
+
+                       // $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days);
+                       if(!empty($tat_days)){
+                           $count = 0;
+                           for($i = 0; $i < count($tat_days); $i++){
+                                 $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                           }
+                       }
+                //$price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                /*if(!empty($tat_price_pound)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
 
@@ -606,10 +649,17 @@ public function quote_place(Request $request)
 
                     }
 
-                }
+                }*/
               }else{
 
-                $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                if(!empty($tat_days)){
+                    $count = 0;
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                    }
+                }
+
+                /*$price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                 if(!empty($tat_price_euro)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -622,18 +672,19 @@ public function quote_place(Request $request)
 
                     }
 
-                }
+                }*/
               } 
+
           $org_price = "";  
           $price_symbol = "";   
           foreach ($price["price"] as $key => $value) {
                      if($value["day"] == $selected_day){
-                        $org_price .= ($value["price"] * $value["sort"]) + $value["tat_price"];
+                        $org_price .= $value["sort"] * $value["tat_price"];
                         $price_symbol .= $value["symbol"];
                      }
           }
           
-
+         //  echo "<pre>"; print_r($org_price); die;
         ////////////////////////////////////////////////
 
 

@@ -154,6 +154,8 @@ class CartController extends Controller
               $prepare_days = $get_order->prepare_days;
               $euro_org_price = $EUR_price;
               $tat_price_pound = json_decode($get_order->tat_price_pound);
+              $tat_price = json_decode($get_order->tat_price_pound);
+              $tat_days = json_decode($get_order->tat_days);
               $tat_price_euro = array();
               foreach ($tat_price_pound as $key => $value) {
                 $tat_price_euro[] = $this->get_euro_price($value);
@@ -164,8 +166,14 @@ class CartController extends Controller
               $price["quantity"]  = $get_order->custom_quantity;
               $sort = $cartProduct->orderdata->select_sort;
               if($currency == "GBP"){
-                $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
-                if(!empty($tat_price_pound)){
+               // $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                      if(!empty($tat_days)){
+                           $count = 0;
+                           for($i = 0; $i < count($tat_days); $i++){
+                                 $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                           }
+                       }
+                /*if(!empty($tat_price_pound)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
 
@@ -177,10 +185,17 @@ class CartController extends Controller
 
                     }
 
-                }
+                }*/
               }else{
 
-                $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                if(!empty($tat_days)){
+                    $count = 0;
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                    }
+                }
+
+                /*$price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                 if(!empty($tat_price_euro)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -193,13 +208,13 @@ class CartController extends Controller
 
                     }
 
-                }
+                }*/
               } 
           $org_price = "";  
           $price_symbol = "";   
           foreach ($price["price"] as $key => $value) {
                      if($value["day"] == $selected_day){
-                        $org_price .= ($value["price"] * $value["sort"]) + $value["tat_price"];
+                        $org_price .= $value["sort"] * $value["tat_price"];
                         $price_symbol .= $value["symbol"];
                      }
           }

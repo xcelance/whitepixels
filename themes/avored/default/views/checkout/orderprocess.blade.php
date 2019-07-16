@@ -134,7 +134,11 @@
                                 <select class="form-control" name="orientation" required="">
                                 	 <option>None</option>
                                 	 @foreach($orientation_data as $orientation)
+                                       @if(isset($orderData['orientation_id']))
                                        <option <?php echo ($orderData['orientation_id'] == $orientation->id)?'selected':'';?> value="{{$orientation->name}}">{{$orientation->name}}</option>
+                                       @else
+                                         <option value="{{$orientation->name}}">{{$orientation->name}}</option>
+                                       @endif
                                      @endforeach  
                                 </select>
                             </div>

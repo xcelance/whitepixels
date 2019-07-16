@@ -35,7 +35,7 @@ class ProductViewController extends Controller
         $this->downRep = $downRep;
     }
 
-    public function view($slug)
+    public function view($maincat,$slug)
     {
         $product = $this->repository->findBySlug($slug);
         $jsonData = [];
@@ -104,10 +104,14 @@ class ProductViewController extends Controller
                            ->get(); 
         $get_relative = array();                   
             foreach ($get_cat as $value) {
-            
-                    $relative_product = DB::select("select * from avored_products where id = $value->product_id");
-                    $get_relative[] =  $relative_product;                                    # code...
+                  
+                    $relative_product = DB::select("select * from avored_products where id = $value->product_id AND section = '$maincat'");
+                    if(!empty($relative_product)){
+                      $get_relative[] =  $relative_product; 
+                    }
+                    # code...
             }
+            //echo "<pre>"; print_r($get_relative); die;
       $get_product_fields= DB::table('product_custom_fields')
                            ->where("product_id",$product->id)
                            ->get();
@@ -189,6 +193,7 @@ class ProductViewController extends Controller
           $get_product_fields= DB::table('product_custom_fields')
                                ->where("product_id",$request->product_id)
                                ->where("material",$request->material_id)
+                               ->orderBy('custom_quantity')
                                ->get();
 
           $material_ids = array();                   
@@ -486,7 +491,8 @@ class ProductViewController extends Controller
             $quantity = array(); 
             $price = array(); 
             $symbol = array(); 
-            $i = 0;             
+            $i = 0;  
+            $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);           
             foreach ($get_quanitity_fields as $value) {
               $quantity["quantity_id"][]= $value->id;
                 $quantity["quantity"][]= $value->custom_quantity;
@@ -494,8 +500,11 @@ class ProductViewController extends Controller
                   $price["price"][]= $value->custom_price_pound;
                   $price["symbol"][]= "£";
                 }else{
-                  $price["price"][]= $value->custom_price_euro;
-                   $price["symbol"][]= "€";
+                  $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                 }
                 
             } 
@@ -797,7 +806,8 @@ class ProductViewController extends Controller
             $quantity = array(); 
             $price = array(); 
             $symbol = array(); 
-            $i = 0;             
+            $i = 0;   
+            $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);          
             foreach ($get_quanitity_fields as $value) {
               $quantity["quantity_id"][]= $value->id;
                 $quantity["quantity"][]= $value->custom_quantity;
@@ -805,8 +815,11 @@ class ProductViewController extends Controller
                   $price["price"][]= $value->custom_price_pound;
                   $price["symbol"][]= "£";
                 }else{
-                  $price["price"][]= $value->custom_price_euro;
-                   $price["symbol"][]= "€";
+                  $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                 }
                 
             } 
@@ -1051,7 +1064,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0; 
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);            
                 foreach ($get_quanitity_fields as $value) {
                   $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1059,8 +1073,11 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                      $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                     }
                     
                 } 
@@ -1293,7 +1310,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;  
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);           
                 foreach ($get_quanitity_fields as $value) {
                   $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1301,8 +1319,11 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                      $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                     }
                     
                 } 
@@ -1507,7 +1528,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;   
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);          
                 foreach ($get_quanitity_fields as $value) {
                   $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1515,8 +1537,12 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                         $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
+                    
                     }
                     
                 } 
@@ -1688,7 +1714,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;   
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);          
                 foreach ($get_quanitity_fields as $value) {
                   $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1696,8 +1723,12 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                       //echo "<pre>"; print_r($get_quanitity_fields); die;
+                        $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                     }
                     
                 } 
@@ -1835,7 +1866,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;  
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);           
                 foreach ($get_quanitity_fields as $value) {
                   $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1843,8 +1875,12 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                       //echo "<pre>"; print_r($get_quanitity_fields); die;
+                      $base_price = $value->custom_price_pound;
+                        $EUR_price = $this->get_euro_price($base_price);
+                      
+                        $price["price"][]= $EUR_price;
+                        $price["symbol"][]= "€";
                     }
                     
                 } 
@@ -1944,7 +1980,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;  
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);           
                 foreach ($get_quanitity_fields as $value) {
                     $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -1952,8 +1989,12 @@ class ProductViewController extends Controller
                       $price["price"][]= $value->custom_price_pound;
                       $price["symbol"][]= "£";
                     }else{
-                      $price["price"][]= $value->custom_price_euro;
-                       $price["symbol"][]= "€";
+                       //echo "<pre>"; print_r($get_quanitity_fields); die;
+                        $base_price = $value->custom_price_pound;
+                          $EUR_price = $this->get_euro_price($base_price);
+                        
+                          $price["price"][]= $EUR_price;
+                          $price["symbol"][]= "€";
                     }
                     
                 } 
@@ -2015,7 +2056,8 @@ class ProductViewController extends Controller
                 $quantity = array(); 
                 $price = array(); 
                 $symbol = array(); 
-                $i = 0;             
+                $i = 0;  
+                $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);           
                 foreach ($get_quanitity_fields as $value) {
                     $quantity["quantity_id"][]= $value->id;
                     $quantity["quantity"][]= $value->custom_quantity;
@@ -2105,6 +2147,7 @@ class ProductViewController extends Controller
       $product_data= DB::table('products')
                            ->where("id",$request->product_id)
                            ->first();
+
       $product_name = $product_data->name;
       
       $product_description = $product_data->description;
@@ -2124,11 +2167,16 @@ class ProductViewController extends Controller
 
       $get_product_fields= DB::table('product_custom_fields')
                            ->where("product_id",$request->product_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
+
 
       $material_ids = array();                   
       foreach ($get_product_fields as $value) {
-          $material_ids[] = $value->material;
+          if($value->material != ""){
+            $material_ids[] = $value->material;
+          }
+          
 
       }  
       $material_ids = array_unique($material_ids);
@@ -2140,14 +2188,16 @@ class ProductViewController extends Controller
                      ->first();
           $material["material"][] = $get_material;           
       }  
+
      //////////////////////////////////////////////////////////////////                                             
-     // echo "<pre>"; print_r($material); die;
+     //echo "<pre>"; print_r($material_ids); die;
       if(!empty($material)){
         $material_id = $material["material"][0]->id;
 
         $get_side_fields = DB::table('product_custom_fields')
                            ->where("product_id",$request->product_id)
                            ->where("material",$material_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
      
         $side_ids = array();                   
@@ -2167,6 +2217,7 @@ class ProductViewController extends Controller
           }
                
         }
+
       /////////////////////////////////////////////////////////////////////////////
         if(!empty($side_data)) {
             $side_id = $side_data["side"][0]->id;
@@ -2195,6 +2246,7 @@ class ProductViewController extends Controller
                     }
                                
                 }  
+
         //////////////////////////////////////////////////////////////////////////////        
             if(!empty($orientation_data)) {
                 $orientation_id = $orientation_data["orientation"][0]->id;
@@ -2207,6 +2259,7 @@ class ProductViewController extends Controller
                            ->where("material",$material_id)
                            ->where("side",$side_id)
                            ->where("orientation",$orientation_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
             $finishing_type_ids = array();                   
                       foreach ($get_finishing_type_fields as $value) {
@@ -2239,6 +2292,7 @@ class ProductViewController extends Controller
                            ->where("side",$side_id)
                            ->where("orientation",$orientation_id)
                            ->where("finishing_type",$finishing_type_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
         $printing_side_ids = array();                   
                 foreach ($get_printing_side_fields as $value) {
@@ -2270,6 +2324,7 @@ class ProductViewController extends Controller
                            ->where("orientation",$orientation_id)
                            ->where("finishing_type",$finishing_type_id)
                            ->where("printing_side",$printing_side_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
             $shape_ids = array();                   
                       foreach ($get_shape_fields as $value) {
@@ -2303,6 +2358,7 @@ class ProductViewController extends Controller
                            ->where("finishing_type",$finishing_type_id)
                            ->where("printing_side",$printing_side_id)
                            ->where("shape",$shape_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
             $sleeve_color_ids = array();                   
                       foreach ($get_sleeve_color_fields as $value) {
@@ -2339,6 +2395,7 @@ class ProductViewController extends Controller
                            ->where("printing_side",$printing_side_id)
                            ->where("shape",$shape_id)
                            ->where("sleeve_color",$sleeve_color_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();
             $size_ids = array();                   
                       foreach ($get_size_fields as $value) {
@@ -2379,6 +2436,7 @@ class ProductViewController extends Controller
                                  ->where("shape",$shape_id)
                                  ->where("sleeve_color",$sleeve_color_id)
                                  ->where("size",$size_id)
+                                 ->orderBy('custom_quantity', 'asc')
                                  ->get();
             $base_ids = array();                   
                       foreach ($get_base_fields as $value) {
@@ -2416,12 +2474,14 @@ class ProductViewController extends Controller
                            ->where("sleeve_color",$sleeve_color_id)
                            ->where("size",$size_id)
                            ->where("base",$base_id)
+                           ->orderBy('custom_quantity', 'asc')
                            ->get();  
        
             $quantity = array(); 
             $price = array(); 
             $symbol = array(); 
             $i = 0;  
+            $get_quanitity_fields = array_sort($get_quanitity_fields, 'custom_quantity', SORT_ASC);
 
             foreach ($get_quanitity_fields as $value) {
                 $quantity["quantity_id"][]= $value->id;
@@ -2430,8 +2490,9 @@ class ProductViewController extends Controller
                   $price["price"][]= $value->custom_price_pound;
                   $price["symbol"][]= "£";
                 }else{
+                  //echo "<pre>"; print_r($get_quanitity_fields); die;
                   $base_price = $value->custom_price_pound;
-                  $EUR_price = $this->get_euro_price($base_price);
+                    $EUR_price = $this->get_euro_price($base_price);
                   
                     $price["price"][]= $EUR_price;
                     $price["symbol"][]= "€";
@@ -2439,11 +2500,13 @@ class ProductViewController extends Controller
                 }
                 
             } 
-           // echo "<pre>"; print_r($price); die;
+           //echo "<pre>"; print_r($price); die;
             $quantity_price = array();
             $quantity_price = array_merge($quantity,$price,$symbol);
+            // print_r($quantity_price);die;
             $data_all = array_merge($material,$side_data,$orientation_data,$printing_side_data,$finishing_type_data,$size_data,$shape_data,$sleeve_color_data,$base_data,$quantity_price,$productData);
-           /* echo "<pre>"; print_r($productData); die;*/
+
+           // echo "<pre>"; print_r($data_all); die;
             echo json_encode($data_all);
 
       }else{
@@ -2592,6 +2655,8 @@ class ProductViewController extends Controller
                                      
                       } 
               $pound_org_price = $get_fields->custom_price_pound;  
+              $tat_price = json_decode($get_fields->tat_price_pound);
+              $tat_days = json_decode($get_fields->tat_days);
 
               $base_price = $pound_org_price;
               $EUR_price = $this->get_euro_price($base_price);
@@ -2600,29 +2665,29 @@ class ProductViewController extends Controller
               $prepare_days = $get_fields->prepare_days;
               $tat_price_pound = json_decode($get_fields->tat_price_pound);
               $tat_price_euro = array();
-              foreach ($tat_price_pound as $key => $value) {
+              foreach ($tat_price as $key => $value) {
                 $tat_price_euro[] = $this->get_euro_price($value);
               }
               $price = array();
-
+             // print_r($tat_days);die;
               if($request->currency == "pound"){
-                $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days);
-                if(!empty($tat_price_pound)){
+                // $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days);
+                if(!empty($tat_days)){
                     $count = 0;
-                    for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
-
-                       for($k = $count;$k < count($tat_price_pound);$k++){
-                          $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price_pound[$k],"day"=>$i);
-                          break;
-                       }
-                       $count++;
-
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i]);
                     }
-
                 }
               }else{
 
-                $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days);
+                if(!empty($tat_days)){
+                    $count = 0;
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i]);
+                    }
+                }
+
+                /*$price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days);
                 if(!empty($tat_price_euro)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -2635,8 +2700,9 @@ class ProductViewController extends Controller
 
                     }
 
-                }
+                }*/
               } 
+             //  print_r($price);die;
               $array_data = array(); 
               $array_data["product_data"] = $product_data;
                 $data = array_merge($array_data,$price);
@@ -2652,33 +2718,43 @@ class ProductViewController extends Controller
                                      ->where("id",$request->field_id)
                                      ->first();                    
               
-              $pound_org_price = $get_fields->custom_price_pound;   
+              $pound_org_price = $get_fields->custom_price_pound; 
+              $base_price = $pound_org_price;
+              $EUR_price = $this->get_euro_price($base_price);
+              $tat_price = json_decode($get_fields->tat_price_pound);
+              //echo "<pre>"; print_r($tat_price); die;
+              $tat_days = json_decode($get_fields->tat_days);  
               $euro_org_price = $get_fields->custom_price_euro;
               $prepare_days = $get_fields->prepare_days;
               $tat_price_pound = json_decode($get_fields->tat_price_pound);
-              $tat_price_euro = json_decode($get_fields->tat_price_euro);
-
+              //$tat_price_euro = json_decode($get_fields->tat_price_euro);
+              $tat_price_euro = array();
+              foreach ($tat_price as $key => $value) {
+                $tat_price_euro[] = $this->get_euro_price($value);
+              }
+             // echo "<pre>"; print_r($tat_price_euro); die;
               $price = array();
+              // print_r($request->all());
               $price["quantity"]  = $get_fields->custom_quantity;
               $sort = $request->sort;
-              if($request->currency == "pound"){
-                $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
-                if(!empty($tat_price_pound)){
+               if($request->currency == "pound"){
+                // $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>0,"day"=>$prepare_days);
+                if(!empty($tat_days)){
                     $count = 0;
-                    for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_pound); $i--){
-
-                       for($k = $count;$k < count($tat_price_pound);$k++){
-                          $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price_pound[$k],"day"=>$i,"sort"=>$sort);
-                          break;
-                       }
-                       $count++;
-
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"£","price"=>$pound_org_price,"tat_price"=>$tat_price[$i],"day"=>$tat_days[$i],"sort"=>$sort);
                     }
-
                 }
               }else{
 
-                $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
+                if(!empty($tat_days)){
+                    $count = 0;
+                    for($i = 0; $i < count($tat_days); $i++){
+                          $price["price"][] = array("symbol"=>"€","price"=>$EUR_price,"tat_price"=>$tat_price_euro[$i],"day"=>$tat_days[$i],"sort"=>$sort);
+                    }
+                }
+
+               /* $price["price"][] = array("symbol"=>"€","price"=>$euro_org_price,"tat_price"=>0,"day"=>$prepare_days,"sort"=>$sort);
                 if(!empty($tat_price_euro)){
                     $count = 0;
                     for($i = $prepare_days - 1; $i >= $prepare_days - count($tat_price_euro); $i--){
@@ -2691,9 +2767,9 @@ class ProductViewController extends Controller
 
                     }
 
-                }
+                }*/
               } 
-                //echo "<pre>"; print_r($quantity_price); die;
+               // echo "<pre>"; print_r($price); die;
                 echo json_encode($price);
       ///////////////////////////////////////////////////////////////
     }

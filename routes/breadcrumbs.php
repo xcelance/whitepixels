@@ -97,30 +97,30 @@ Breadcrumbs::for('my-quote', function ($trail) {
 });
 
 //Home > Blog > [Category]
-Breadcrumbs::register('category', function ($trail, $category) {   
-    $trail->parent('home');
-    $trail->push('All Products',url('products', ""));    
-    $trail->push($category->name, route('category', $category->id));
-});
+// Breadcrumbs::register('category', function ($trail, $category) {   
+//     $trail->parent('home');
+//     $trail->push('All Products',url('products', ""));    
+//     $trail->push($category->name, route('category', $category->id));
+// });
 
 //Home > Blog > [Category]
-Breadcrumbs::register('products', function ($trail, $products) { 
-    $trail->parent('home');
-    $trail->push('All Products',url('products'));    
-});
+// Breadcrumbs::register('products', function ($trail, $products) { 
+//     $trail->parent('home');
+//     $trail->push('All Products',url('products'));    
+// });
 
-Breadcrumbs::for('product.view', function ($trail, $product) {    
-    $trail->parent('home'); 
-    $trail->push('All Products',url('products', ""));   
-    $parentCat = DB::table('category_product')
-                    ->where("product_id",$product->id)
-                    ->first();
-    $categorydata = DB::table('categories')
-                              ->where("id",$parentCat->category_id)
-                              ->first();                               
-    $trail->push($categorydata->name, route('category', $categorydata->slug));
-    $trail->push($product->name, route('product.view', $product->id));
-});
+// Breadcrumbs::for('product.view', function ($trail, $product) {    
+//     $trail->parent('home'); 
+//     $trail->push('All Products',url('products', ""));   
+//     $parentCat = DB::table('category_product')
+//                     ->where("product_id",$product->id)
+//                     ->first();
+//     // $categorydata = DB::table('categories')
+//     //                           ->where("id",$parentCat->category_id)
+//     //                           ->first();                               
+//     $trail->push($categorydata->name, route('category', $categorydata->slug));
+//     $trail->push($product->name, route('product.view', $product->id));
+// });
 
 // Breadcrumbs::for('category', function ($trail, $category) {
 //     $trail->parent('home');

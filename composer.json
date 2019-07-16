@@ -23,7 +23,8 @@
 		"emotality/tawk-laravel": "^1.0",
 		"fabpot/goutte": "^3.2",
 		"fideloper/proxy": "~4.0",
-		"laravel/socialite": "^3.2"
+		"laravel/socialite": "^3.2",
+		"phpmailer/phpmailer": "^6.0"
 	},
 	"require-dev" : {
 		"filp/whoops": "~2.0",

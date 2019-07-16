@@ -12,7 +12,7 @@
 <div class="breadcrumb-block product_bread">
     <div class="container">
         <nav aria-label="breadcrumb">
-        {{ Breadcrumbs::render('product.view', $product) }}
+        
         </nav>
     </div>
 </div>
@@ -420,7 +420,7 @@ function myStopFunction() {
                    printing_sample = ""; 
                 }
 
-                 var action = "{{url('send_order')}}"
+                var action = "{{url('send_order')}}"
                 jQuery.ajax({
                 headers: { 'X-CSRF-TOKEN':jQuery('meta[name="csrf-token"]').attr('content')
                               },
@@ -500,6 +500,7 @@ function myStopFunction() {
                 if(!base_id){
                   base_id = "null";
                 }
+                // console.log(quantity);
                 var currency_val = current_currency;   
                 var action = "{{url('get_order_detail_data')}}"
                 jQuery.ajax({
@@ -589,11 +590,12 @@ function myStopFunction() {
                                         $checked = "";
                                         $active = "";
                                     }
-                                var price  = parseInt(data.price[i].price) + parseInt(data.price[i].tat_price);  
+                                var price  = data.price[i].tat_price;  
                                    html +='<li class="d-flex '+$active+'" day="'+data.price[i].day+'" price="'+price+'" price_symbol="'+data.price[i].symbol+'"><a href="javascript:void(0)">'+data.price[i].day+' Days  @ '+data.price[i].symbol+'<p class="get_tat_pr">'+price+'</p></a></li>';
                                  /*html +='<div class="custom-control custom-radio"><input type="radio" id="customRadio'+i+'" name="customRadio" class="custom-control-input" '+$checked+' ><label class="custom-control-label" for="customRadio'+i+'">'+data.price[i].day+' Days  @ '+data.price[i].symbol+price+'</label></div>';*/
 
                                 }
+
                                 html +="</ul></div>";
                                 jQuery("body").find(".turnaround_time").html(html);
                                  ////////////////////// get Dispatched order ////////
@@ -727,7 +729,7 @@ function myStopFunction() {
                                         $checked = "";
                                         $active = "";
                                     }
-                                var price  = parseInt(parseInt(data.price[i].price) * parseInt(data.price[i].sort)) + parseInt(data.price[i].tat_price);  
+                                var price  = parseInt(data.price[i].sort) * parseInt(data.price[i].tat_price);  
                                    html +='<li class="d-flex '+$active+'" day="'+data.price[i].day+'" price="'+price+'" price_symbol="'+data.price[i].symbol+'"><a href="javascript:void(0)">'+data.price[i].day+' Days  @ '+data.price[i].symbol+'<p class="get_tat_pr">'+price+'</p></a></li>';
                                  /*html +='<div class="custom-control custom-radio"><input type="radio" id="customRadio'+i+'" name="customRadio" class="custom-control-input" '+$checked+' ><label class="custom-control-label" for="customRadio'+i+'">'+data.price[i].day+' Days  @ '+data.price[i].symbol+price+'</label></div>';*/
 

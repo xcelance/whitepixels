@@ -1,5 +1,11 @@
 @extends('layouts.app_new')
-
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 70%;
+      }     
+    </style>
 @section('slider')
 <div class="contact-banner inner-banner">
             <div class="container">
@@ -25,59 +31,101 @@
             <div class="container">
                 <div class="row">
                 	<h3 class="site-heading">whitepixels.com</h3>
-                	<h3 class="c-detail-heading">Contact Numbers:</h3>
                      <div class="col-md-4">
+                        <p class="contact-icon-div">
+                            <span class="outer"><i class="fas fa-map-marker-alt"></i></span>
+                        </p>
+                    <h3 class="c-detail-heading">Contact Address:</h3>                        
                      	<div class="c-detail-box">
-                     		<div class="c-grey-header">Republic of Ireland</div>
                      		<div class="contact-det">
-                     			<p>0044 28 9032 3552</p>
-                     			<p>048 9032 3552</p>
+                                <p>White Pixels</p>
+                                 <p>Owen O’Cork Mill, Unit 9B, <br>288 Beersbridge Rd, Belfast,<br> BT5 5DX, County Antrim,<br> Northern Ireland</p>
                      	    </div>
                      	</div>
                      </div>
                      <div class="col-md-4">
-                     	<div class="c-detail-box">
-                     		<div class="c-grey-header">Northern Ireland</div>
-                     		<div class="contact-det">
-                     			<p>0044 28 9032 3552</p>
-                     			<p>048 9032 3552</p>
-                     	    </div>
-                     	</div>
+                       <p class="contact-icon-div">
+                          <span class="outer"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                       </p>    
+                    <h3 class="c-detail-heading">Telephone:</h3>                        
+                        <div class="c-detail-box">
+                            <div class="contact-det">
+                                <p>+44 28 9094 4444</p>
+                            </div>
+                        </div>
                      </div>
                      <div class="col-md-4">
-                     	<div class="c-detail-box">
-                     		<div class="c-grey-header">Republic of Ireland</div>
-                     		<div class="contact-det">
-                     			<p>0044 28 9032 3552</p>
-                     	    </div>
-                     	</div>
+                       <p class="contact-icon-div">
+                          <span class="outer"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                       </p>            
+                    <h3 class="c-detail-heading">Email Address:</h3>                        
+                        <div class="c-detail-box">
+                            <div class="contact-det">
+                                 <p>quotes@whitepixel.net</p>
+                            </div>
+                        </div>
+                     </div>                                         
+                </div>
+           
+            </div>
+        </section>
+
+<!--         <section class="contact-sec">
+            <div class="container">
+                <div class="row">
+                    <h3 class="site-heading">whitepixels.com</h3>
+                    <h3 class="c-detail-heading">Contact Numbers:</h3>
+                     <div class="col-md-4">
+                        <div class="c-detail-box">
+                            <div class="c-grey-header">Republic of Ireland</div>
+                            <div class="contact-det">
+                                <p>0044 28 9032 3552</p>
+                                <p>048 9032 3552</p>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="c-detail-box">
+                            <div class="c-grey-header">Northern Ireland</div>
+                            <div class="contact-det">
+                                <p>0044 28 9032 3552</p>
+                                <p>048 9032 3552</p>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="c-detail-box">
+                            <div class="c-grey-header">Republic of Ireland</div>
+                            <div class="contact-det">
+                                <p>0044 28 9032 3552</p>
+                            </div>
+                        </div>
                      </div>                                          
                 </div>
                 <div class="row">
-                	<h3 class="c-detail-heading">Contact Addresses:</h3>
+                    <h3 class="c-detail-heading">Contact Addresses:</h3>
                      <div class="col-md-4">
-                     	<div class="c-detail-box">
-                     		<div class="c-grey-header">Belfast Factory Address</div>
-                     		<div class="contact-det">
-                     			<p>3 Nicholson Drive,</p>
-                     			<p>Michelin Road, Mallusk, BT36 4FB</p>
-                     	    </div>
-                     	</div>
+                        <div class="c-detail-box">
+                            <div class="c-grey-header">Belfast Factory Address</div>
+                            <div class="contact-det">
+                                <p>3 Nicholson Drive,</p>
+                                <p>Michelin Road, Mallusk, BT36 4FB</p>
+                            </div>
+                        </div>
                      </div>
                      <div class="col-md-4">
-                     	<div class="c-detail-box">
-                     		<div class="c-grey-header">Liverpool Factory Address</div>
-                     		<div class="contact-det">
-                     			<p>Unit 16, Compass West Industrial Estate,</p>
-                     			<p>Speke, Liverpool, L24 1YA</p>
-                     	    </div>
-                     	</div>
+                        <div class="c-detail-box">
+                            <div class="c-grey-header">Liverpool Factory Address</div>
+                            <div class="contact-det">
+                                <p>Unit 16, Compass West Industrial Estate,</p>
+                                <p>Speke, Liverpool, L24 1YA</p>
+                            </div>
+                        </div>
                      </div>
                                           
                 </div>                
             </div>
-        </section>
-        
+        </section> -->        
 <!--         <section class="contact-sec">
             <div class="container">
                 <div class="popular-heading">
@@ -162,7 +210,7 @@
 
         
         <div class="map-block">
-            <iframe class="map" width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?q=Status201%20Web%20Development&amp;key=AIzaSyCCGx7iveK21dme8OuLgX9Je7TUDDCw3_A" class=""></iframe>
+<div id="map"></div>
         </div>
         
       
@@ -184,6 +232,35 @@
     });
 });
 </script>
+<script>
+
+      // The following example creates a marker in Stockholm, Sweden using a DROP
+      // animation. Clicking on the marker will toggle the animation between a BOUNCE
+      // animation and no animation.
+
+      var marker;
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: {lat: 54.592422, lng: -5.901465}
+        });
+
+        marker = new google.maps.Marker({
+          map: map,
+          icon: 'http://122.160.12.75:3044/quinnstheprinters/public/vendor/avored-default/images/map-icon.svg',
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: {lat: 54.592422, lng: -5.901465}
+        });
+
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUSxUNk6tu3q6Yg8PxdTIzrOuK96sM5Bs&callback=initMap">
+    </script>
 @endpush
 
 

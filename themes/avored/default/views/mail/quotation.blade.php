@@ -79,7 +79,7 @@
                              </tr> 
 
                              <tr>
-                              <td align="center" valign="top" style="font-size: 15px;color: #333333;">NB! To avoid emails being flagged as junk please ensure you add <a href="mailto:quotes@whitepixels.net">quotes@whitepixels.net</a> and <a href="mailto:sales@whitepixels.net">sales@whitepixels.net</a> to your contacts.</td>
+                              <td align="center" valign="top" style="font-size: 15px;color: #333333;">NB! To avoid emails being flagged as junk please ensure you add <a href="#">quotes<span>&#64;</span>whitepixels.net</a> and <a href="#">sales<span>&#64;</span>whitepixels.net</a> to your contacts.</td>
                              </tr> 
                              <tr><td style="height:20px;"></td></tr> 
                         </tbody>
@@ -106,12 +106,12 @@
                          </tr>                         
                         <tr>
                              <td align="center" valign="middle" style="height:20px">
-                                 <b>Email <a href="mailto:quotes@whitepixels.net" style="color:#00e5cf!important" target="_blank">quotes@whitepixels.net</a> for queries relating to this quote or</b>
+                                 <b>Email <a href="#" style="color:#00e5cf!important" target="_blank">quotes<span>&#64;</span>whitepixels.net</a> for queries relating to this quote or</b>
                              </td>
                          </tr>
                         <tr>
                              <td align="center" valign="middle" style="height:20px">
-                                 <b><a href="mailto:sales@whitepixels.net" style="color:#00e5cf!important" target="_blank">sales@whitepixels.net</a> for queries relating to your account.</b>
+                                 <b><a href="#" style="color:#00e5cf!important" target="_blank">sales<span>&#64;</span>whitepixels.net</a> for queries relating to your account.</b>
                              </td>
                          </tr>
                         <tr><td height="20"></td></tr>   

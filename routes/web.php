@@ -15,9 +15,10 @@ Route::get('', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('change_currency', 'PageController@change_currency');
+Route::get('sendmail', 'PageController@sendmail');
 
-Route::get('category/{slug}', 'CategoryViewController@view')->name('category');
-Route::get('product/{slug}', 'ProductViewController@view')->name('product.view');
+Route::get('category/{maincat}/{slug}', 'CategoryViewController@view')->name('category');
+Route::get('product/{maincat}/{slug}', 'ProductViewController@view')->name('product.view');
 // Route::get('product-search', 'SearchController@result')->name('search.result');
 
 Route::get('product-search', 'SearchController@index');

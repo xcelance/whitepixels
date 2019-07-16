@@ -97,12 +97,12 @@
                          </tr>                         
                         <tr>
                              <td align="center" valign="middle" style="height:20px">
-                                 <b>Email <a href="mailto:quotes@whitepixels.net" style="color:#00e5cf!important" target="_blank">artwork@whitepixels.net</a> for queries relating to this quote or</b>
+                                 <b>Email <a href="#" style="color:#00e5cf!important" target="_blank">artwork<span>@</span>whitepixels.net</a> for queries relating to this quote or</b>
                              </td>
                          </tr>
                         <tr>
                              <td align="center" valign="middle" style="height:20px">
-                                 <b><a href="mailto:sales@whitepixels.net" style="color:#00e5cf!important" target="_blank">artwork@whitepixels.net</a> for queries relating to your account.</b>
+                                 <b><a href="#" style="color:#00e5cf!important" target="_blank">artwork<span>@</span>whitepixels.net</a> for queries relating to your account.</b>
                              </td>
                          </tr>
                         <tr><td height="20"></td></tr>   

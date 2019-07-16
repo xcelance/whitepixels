@@ -62,7 +62,7 @@
                              </tr> 
 
                              <tr>
-                              <td align="center" valign="top" style="font-size: 17px;color: #333333;">NB! To avoid emails being flagged as junk please ensure you add <a href="mailto:quotes@quinnstheprinters.com">quotes@quinnstheprinters.com</a> and <a href="mailto:sales@quinstheprinters.com">sales@quinstheprinters.com</a> to your contacts.</td>
+                              <td align="center" valign="top" style="font-size: 17px;color: #333333;">NB! To avoid emails being flagged as junk please ensure you add <a href="#">quotes<span>@</span>whitepixels.net</a> and <a href="">sales<span>@</span>whitepixels.net</a> to your contacts.</td>
                              </tr> 
                              <tr><td style="height:20px;"></td></tr>
 
@@ -72,8 +72,8 @@
 Got a query?
 Feel free to contact us on 028 9032 3552
 OR
-Email quotes@quinnstheprinters.com for queries relating to this quote or
-sales@quinnstheprinters.com for queries relating to your account.</p>
+Email <a href="#">quotes<span>@</span>whitepixels.net</a> for queries relating to this quote or
+<a href = "#">sales<span>@</span>whitepixels.net</a> for queries relating to your account.</p>
                     <table class="login-table" bgcolor="#F7F7F7" border="0" cellpadding="0" cellspacing="0" style="margin:0;padding:10px 30px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333333;background: #f2f2f2;    border: 1px solid #efe9e9;max-width:550px;" width="100%">
                         <tbody>
                             <tr>

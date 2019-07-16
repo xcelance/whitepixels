@@ -934,3 +934,16 @@ final class OCEANWP_Theme_Class {
 
 }
 new OCEANWP_Theme_Class;
+
+add_filter( 'get_custom_logo', function ( $html ) {
+    $home_url =  home_url( '/' ); 
+
+    $home_url = str_replace("/blog", "", $home_url);
+	//$new_logo_url = $home_url; // <-- Just change this.
+
+	$search  = sprintf( '<a href="%s"', esc_url( home_url( '/' ) ) );
+	$replace = sprintf( '<a href="%s"', esc_url($home_url ) );
+
+	return str_replace( $search, $replace, $html );
+
+} );

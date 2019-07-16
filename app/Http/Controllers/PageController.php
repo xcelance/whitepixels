@@ -204,26 +204,26 @@ class PageController extends Controller
         // $html = "Hi, ".$request->custname."  <br> Thank you for your quote request. We are currently processing it for you and will contact you with a price shortly."; 
         
         $data = array("username"=> $request->custname,"email"=> $request->company_name, "name"=> $request->custname);
-
+        // $email = 'niraj.pathak@xcelance.com';
         Mail::send("mail.quotation", $data, function($message) use($email,$company_name){
          $message->to($email, "<".$company_name.">")->subject
             ('Quote Request');
         });
 
-
-        // $data = array();
-        // Mail::send([],[], function($message) use($email,$company_name,$html){
-        //  $message->to($email, "<".$company_name.">")->subject
-        //     ('Quote Request')
-        //     ->setBody($html);
-        // });
-        // Mail::send("", $data, function($message) use ($html){
-        //  $message->to("niraj.pathak@xcelance.com", "<niraj>")->subject
-        //     ('Quote Request');
-        // });
         return redirect()->back()->with('quotation_success', 'Your quotation has been successfully sent. We will contact you soon.');
         die;
 
+    }
+
+    public function sendmail(){
+      $company_name = 'Ands Raj';
+      $email = 'niraj.pathak@xcelance.com';
+
+
+        Mail::send("mail.register_mail", [], function($message) use($email,$company_name){
+         $message->to($email, "<".$company_name.">")->subject
+            ('Quote Request');
+        });       
     }
 
     public function getProductsByCatid(Request $request){

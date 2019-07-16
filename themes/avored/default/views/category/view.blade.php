@@ -10,7 +10,7 @@
 <div class="breadcrumb-block product_bread">
     <div class="container">
         <nav aria-label="breadcrumb">
-        {{ Breadcrumbs::render('category', $category) }}
+        
         </nav>
     </div>
 </div>
@@ -48,9 +48,9 @@ $pro_name  = $product['data'][$data]["name"];
                     <div class="row">
                             <?php //echo "<pre>"; print_r($products); die; ?>
                             @foreach($products as $product)
-                            
+                                  <?php $slug = strtolower($product->section)."/".$product->slug; ?>
                                 <div class="col-md-3 col-sm-6 mb-5"> 
-                                    <a href="{{ route('product.view', $product->slug)}}" title="{{ $product->name }}">
+                                    <a href="{{ url('product')}}/{{$slug}}" title="{{ $product->name }}">
                                     <div class="product-block">
                                         <div class="product-img">
                                             @include('product.view.product-image',['product' => $product])

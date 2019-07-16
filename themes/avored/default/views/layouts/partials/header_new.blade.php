@@ -157,28 +157,141 @@
                                 
                                 <div class="dropdown-menu product-popup">
                                     <div class="condtainer">
-                                        <div class="row">
-                                            <?php $tree =  \App\Helpers\AppHelper::instance()->show_categories(); ?>
+                                         <div class="request-quote-block">
+                                                <h3>Litho Print Section</h3>
+                                                <p>A selection of products offered at unbeatable value</p>
+                                            </div>
+                                        <div class="row">                                           
+                                            <?php $custmenu1 = '';$custmenu2 = '';$custmenu3 = '';
+                                                $tree =  \App\Helpers\AppHelper::instance()->show_categories(); ?>
                                             @foreach($tree as $category)
+                                                <?php
+                                                    if($category->name !== 'Foamex Boards' && $category->name !== 'Mesh Banner' && $category->name !== 'Posters' && $category->name !== 'PVC Banner' && $category->name !== 'Roller Banner'){
+                                                     if($category->name == 'Flags' || $category->name == 'Flyers & Leaflets' || $category->name == 'Unfinished Sheets'){
+                                                        $custmenu1 .= '<h4>'.$category->name.'</h4><ul class="">';
+                                                        if(isset($category->childs)){
+                                                        foreach($category->childs as $child_category){
+                                                         $custmenu1 .= "<li><a href=\"".URL::to('/')."/category/litho/$child_category->slug\">".$child_category->name.'</a></li>';
+                                                        }
+                                                      }
+                                                        
+                                                    }elseif($category->name == 'Folders' || $category->name == 'Wide Format'){
+                                                        $custmenu2 .= '<h4>'.$category->name.'</h4><ul class="">';
+                                                        if(isset($category->childs)){
+                                                        foreach($category->childs as $child_category){
+                                                         $custmenu2 .= "<li><a href=\"".URL::to('/')."/category/litho/$child_category->slug\">".$child_category->name.'</a></li>';
+                                                        }
+                                                      }
+                                                        
+                                                    }else{ ?>
                                             <div class="col">
                                                 <div class="product-list dropdown-list">
+                                                    
                                                     <h4>{{$category->name}}</h4>
                                                     <ul class="">
                                                         @if(isset($category->childs))
                                                         @foreach($category->childs as $child_category)
-                                                         <li><a href="{{url('category')}}/{{$child_category->slug}}">{{$child_category->name}}</a></li>
+                                                         <li><a href="{{url('category')}}/litho/{{$child_category->slug}}">{{$child_category->name}}</a></li>
                                                         @endforeach
                                                         @endif
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <?php } } ?>
+                                            @endforeach 
+                                            <div class="col">
+                                                <div class="product-list dropdown-list">
+                                                    <?php echo $custmenu1.'</ul>'; ?>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="product-list dropdown-list">
+                                                    <?php echo $custmenu2.'</ul>'; ?>
+                                                </div>
+                                            </div>
+                                        </div>                                       
+                                    </div>
+                                     <div class="condtainer">
+                                            <div class="request-quote-block">
+                                                <h3>Digital Print Section</h3>
+                                                <p>A selection of products offered at unbeatable value</p>
+                                            </div>
+                                        <div class="row">
+                                            
+                                            <?php $custmenu1 = '';$custmenu2 = '';$custmenu3 = '';
+                                                $tree =  \App\Helpers\AppHelper::instance()->show_categories(); ?>
+                                            @foreach($tree as $category)
+                                                <?php 
+                                                    if($category->name !== 'Foamex Boards' && $category->name !== 'Mesh Banner' && $category->name !== 'Posters' && $category->name !== 'PVC Banner' && $category->name !== 'Roller Banner'){
+                                                     if($category->name == 'Flags' || $category->name == 'Flyers & Leaflets' || $category->name == 'Unfinished Sheets'){
+                                                        $custmenu1 .= '<h4>'.$category->name.'</h4><ul class="">';
+                                                        if(isset($category->childs)){
+                                                        foreach($category->childs as $child_category){
+                                                         $custmenu1 .= "<li><a href=\"".URL::to('/')."/category/digital/$child_category->slug\">".$child_category->name.'</a></li>';
+                                                        }
+                                                      }
+                                                        
+                                                    }elseif($category->name == 'Folders' || $category->name == 'Wide Format'){
+                                                        $custmenu2 .= '<h4>'.$category->name.'</h4><ul class="">';
+                                                        if(isset($category->childs)){
+                                                        foreach($category->childs as $child_category){
+                                                         $custmenu2 .= "<li><a href=\"".URL::to('/')."/category/digital/$child_category->slug\">".$child_category->name.'</a></li>';
+                                                        }
+                                                      }
+                                                        
+                                                    }else{ ?>
+                                            <div class="col">
+                                                <div class="product-list dropdown-list">
+                                                    
+                                                    <h4>{{$category->name}}</h4>
+                                                    <ul class="">
+                                                        @if(isset($category->childs))
+                                                        @foreach($category->childs as $child_category)
+                                                         <li><a href="{{url('category')}}/digital/{{$child_category->slug}}">{{$child_category->name}}</a></li>
+                                                        @endforeach
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <?php }} ?>
+                                            @endforeach 
+                                            <div class="col">
+                                                <div class="product-list dropdown-list">
+                                                    <?php echo $custmenu1.'</ul>'; ?>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="product-list dropdown-list">
+                                                    <?php echo $custmenu2.'</ul>'; ?>
+                                                </div>
+                                            </div>                                         
+                                        </div>                                     
+                                    </div>
+                                    <div class="condtainer">
+                                         <div class="request-quote-block">
+                                                <h3>Large FormatPrint Section</h3>
+                                                <p>A selection of products offered at unbeatable value</p>
+                                            </div>
+                                        <div class="row"> 
+                                        <?php $custmenu1 = '';$custmenu2 = '';$custmenu3 = '';
+                                                $tree =  \App\Helpers\AppHelper::instance()->show_categories(); ?>
+                                            @foreach($tree as $category)
+                                                 <?php 
+                                                    if($category->name == 'Foamex Boards' || $category->name == 'Mesh Banner'|| $category->name == 'Posters' || $category->name == 'PVC Banner' || $category->name == 'Roller Banner'){ ?>
+                                                <div class="col">
+                                                    <div class="product-list dropdown-list">                                                        
+                                                        <h4><a href="{{url('category')}}/large/{{$child_category->slug}}">{{$category->name}}</a></h4>
+                                                    </div>
+                                                </div>
+                                                <? } ?>
                                             @endforeach
-                                          
-                                        </div>
-                                        <div class="request-quote-block">
+
+                                                                                      
+                                        </div>  
+                                         <div class="request-quote-block">
                                             <p>Can't find what you need or have a bespoke requirement?</p>
                                             <a href="{{url('request_quote')}}">Request a quote</a>
-                                        </div>
+                                        </div>                                     
                                     </div>
 
                                 </div>
